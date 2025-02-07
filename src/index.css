@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+body{
+    background-color: hsl(202, 86%, 94%);
+    font-family: "Plus Jakarta Sans", serif;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
