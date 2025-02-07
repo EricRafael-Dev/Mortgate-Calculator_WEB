@@ -50,7 +50,7 @@ function Results({
           <div className="bg-[#0E2431] border-t-4 border-[#D1D745] rounded-md p-5 mb-3 mt-5">
             <div>
               <label>Your monthly repayments</label>
-              <h1 className="text-4xl text-[#D1D745] font-bold">
+              <h1 className="text-3xl w-full overflow-hidden overflow-ellipsis text-[#D1D745] font-bold">
                 {total.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -60,7 +60,7 @@ function Results({
             <div className="w-full border-1 border-[gray] mt-5 mb-5"></div>
             <div>
               <label>Total you'll repay over the term</label>
-              <h2 className="text-2xl text-white font-bold">
+              <h2 className="w-full overflow-hidden overflow-ellipsis text-1xl text-white font-bold">
                 {(total * n).toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
