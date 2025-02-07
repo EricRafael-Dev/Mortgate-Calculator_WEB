@@ -1,15 +1,19 @@
-import { useState } from "react";
 import iconcalculator from "../assets/icon-calculator.svg";
 
-function CalculatorInputs() {
-  const [value, setValue] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
+function CalculatorInputs({
+  value,
+  valueTerm,
+  valueRate,
+  submitted,
+  setValue,
+  setValueTerm,
+  setValueRate,
+  setSubmitted,
+}) {
   return (
     <form
       noValidate
       onSubmit={(e) => {
-        console.log(submitted);
         e.preventDefault();
         setSubmitted(true);
       }}
@@ -24,21 +28,21 @@ function CalculatorInputs() {
       [&_input]:cursor-pointer [&_input]:p-5
       "
       >
-        <div className="mt-[5%] flex-col ">
+        <div className="mt-[5%] flex-col group">
           <label>Mortgage Amount</label>
           <div
             className={`group
-              rounded-md border border-gray-500 justify-between h-[50px]  
-                [&_input]:w-[85%] [&_input]:rounded-tr-md [&_input]:rounded-br-md
-                
-                has-[:focus]:border-[#D6D82F] 
-                has-[:focus]:border-1 
-                has-[:focus]:[&_div]:bg-[#D6D82F]
-                has-[:focus]:[&_div]:text-[#143516]
-                ${
+              rounded-md border-1 border-gray-500 justify-between h-[50px]  
+              [&_input]:w-[85%] [&_input]:rounded-tr-md [&_input]:rounded-br-md
+              
+              has-[:focus]:border-[#D6D82F] 
+              has-[:focus]:border-1 
+              has-[:focus]:[&_div]:bg-[#D6D82F]
+              has-[:focus]:[&_div]:text-[#143516]
+              ${
                   submitted && value === ""
-                    ? "has-invalid:[&_div]:bg-[#d73328] has-invalid:border-[#d73328]"
-                    : "border-4"
+                    ? "has-invalid:[&_div]:bg-[#d73328] has-invalid:border-[#d73328] has-[:focus]:has-invalid:border-[#d73328]"
+                    : ""
                 }`}
           >
             <div
@@ -46,7 +50,7 @@ function CalculatorInputs() {
               bg-slate-100 
               ${
                 submitted && value === ""
-                  ? " group-has-[:focus]:group-has-invalid:bg-[#d73328] group-has-[:focus]:group-has-invalid:text-white group-has-invalid:text-white"
+                ? " group-has-[:focus]:group-has-invalid:bg-[#d73328] group-has-[:focus]:group-has-invalid:text-white group-has-invalid:text-white"
                   : ""
               }`}
             >
@@ -57,81 +61,115 @@ function CalculatorInputs() {
                 submitted && value === ""
                   ? "invalid:text-[#d73328] focus:invalid:outline-[#d73328] invalid:border-[#d73328]"
                   : ""
-              }`}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              type="number"
-              pattern=""
+                }`}
+                value={value}
+                onChange={(e) => {setValue(e.target.value)}}
+                type="number"
               required
             />
           </div>
+          <p className={`text-[#d73328] text-[13px] font-bold hidden ${submitted ? 'group-has-invalid:block' : ''}`}>Insert a valid value</p>
         </div>
 
         <div className=" flex flex-col lg:flex-row lg:justify-between">
-          <div className="mt-[5%] flex flex-col w-full">
+          <div className="mt-[5%] flex flex-col w-full group">
             <label>Mortgage Term</label>
 
             <div
-              className=" group
-              rounded-md border border-gray-500 justify-between h-[50px]  lg:w-full
+              className={`group
+              rounded-md border-1 border-gray-500 justify-between h-[50px]  lg:w-full
                 [&_input]:w-[75%] [&_input]:rounded-tl-md [&_input]:rounded-bl-md has-[:focus]:border-[#D6D82F] has-[:focus]:border-1 has-[:focus]:[&_div]:bg-[#D6D82F] has-[:focus]:[&_div]:text-[#143516]
-              "
+              ${
+                submitted && valueTerm === ""
+                  ? "has-invalid:[&_div]:bg-[#d73328] has-invalid:border-[#d73328] has-[:focus]:has-invalid:border-[#d73328]"
+                  : ""
+              }
+                `}
             >
               <input
-                className=" 
-              invalid:text-[#d73328]
-              focus:invalid:outline-[#d73328] 
-              invalid:border-[#d73328]
+                className={` 
+              ${
+                submitted && valueTerm === ""
+                  ? "invalid:text-[#d73328] focus:invalid:outline-[#d73328] invalid:border-[#d73328]"
+                  : ""
+              }
 
-            "
+            `}
+                value={valueTerm}
+                onChange={(e) => setValueTerm(e.target.value)}
                 type="number"
                 required
               />
               <div
-                className="w-[25%] h-full rounded-tr-md rounded-br-md flex justify-center items-center font-bold [&_p]:text-[20px] lg:[&_p]:text-[15px] text-slate-400
-              bg-slate-100 
-
-              group-has-[:focus]:group-has-invalid:bg-[#d73328]
-              group-has-[:focus]:group-has-invalid:text-white
-              group-has-invalid:text-white"
+                className={`w-[25%] h-full rounded-tr-sm rounded-br-sm flex justify-center items-center font-bold [&_p]:text-[20px] lg:[&_p]:text-[15px] text-slate-400
+              bg-slate-100 ${
+                submitted && valueTerm === ""
+                  ? " group-has-[:focus]:group-has-invalid:bg-[#d73328] group-has-[:focus]:group-has-invalid:text-white group-has-invalid:text-white"
+                  : ""
+              }`}
               >
                 <p>years</p>
               </div>
+
             </div>
+              <p className={`text-[#d73328] text-[13px] font-bold hidden ${submitted ? 'group-has-invalid:block' : ''}`}>Insert a valid value</p>
           </div>
           <div className="w-[15px]"></div>
-          <div className="mt-[5%] flex flex-col w-full">
+
+          <div className="mt-[5%] flex flex-col w-full group">
             <label>Interest Rate</label>
             <div
-              className="
-              rounded-md border border-gray-500 justify-between h-[50px]  lg:w-full
+              className={`group
+              rounded-md border-1 border-gray-500 justify-between h-[50px]  lg:w-full
                 [&_input]:w-[85%] [&_input]:rounded-tl-md [&_input]:rounded-bl-md has-[:focus]:border-[#D6D82F] has-[:focus]:border-1 has-[:focus]:[&_div]:bg-[#D6D82F] has-[:focus]:[&_div]:text-[#143516]
-              "
+                ${
+                  submitted && valueRate === ""
+                    ? "has-invalid:[&_div]:bg-[#d73328] has-invalid:border-[#d73328] has-[:focus]:has-invalid:border-[#d73328]"
+                    : ""
+                }`}
             >
-              <input type="number" required />
+              <input
+                className={`${
+                  submitted && valueRate === ""
+                    ? "invalid:text-[#d73328] focus:invalid:outline-[#d73328] invalid:border-[#d73328]"
+                    : ""
+                }`}
+                type="number"
+                value={valueRate}
+                onChange={(e) => setValueRate(e.target.value)}
+                required
+              />
               <div
-                className="w-[15%] h-full rounded-tr-md rounded-br-md flex justify-center items-center font-bold [&_p]:text-[20px] lg:[&_p]:text-[15px] text-slate-400
-              bg-slate-100 "
+                className={`w-[15%] h-full rounded-tr-sm rounded-br-sm flex justify-center items-center font-bold [&_p]:text-[20px] lg:[&_p]:text-[15px] text-slate-400
+              bg-slate-100 ${
+                submitted && valueRate === ""
+                  ? " group-has-[:focus]:group-has-invalid:bg-[#d73328] group-has-[:focus]:group-has-invalid:text-white group-has-invalid:text-white"
+                  : ""
+              }`}
               >
                 <p>%</p>
               </div>
             </div>
+            <p className={`text-[#d73328] text-[13px] font-bold hidden ${submitted ? 'group-has-invalid:block' : ''}`}>Insert a valid value</p>
+
           </div>
         </div>
       </div>
 
-      <div className="mt-[5%] flex flex-col justify-between h-[150px]">
+      <div className="mt-[5%] flex flex-col justify-between h-[150px] group">
         <label>Mortgage Type</label>
 
         <label className="has-checked:border-2 has-checked:bg-[#FAFAE0] has-checked:border-[#DCDDAB] flex items-center p-3 [&_label]:pl-3 border border-gray-500 rounded-md h-[50px] cursor-pointer">
-          <input className="mr-4" type="radio" name="type" checked />
+          <input className="mr-4" type="radio" name="type" required />
           Repayment
         </label>
 
         <label className="has-checked:border-2 has-checked:bg-[#FAFAE0] has-checked:border-[#DCDDAB] flex items-center p-3 [&_label]:pl-3 border border-gray-500 rounded-md h-[50px] cursor-pointer">
-          <input className="mr-4" type="radio" name="type" />
+          <input className="mr-4" type="radio" name="type" required />
           Interest Only
         </label>
+        <p className={`text-[#d73328] text-[13px] font-bold hidden ${submitted ? 'group-has-invalid:block' : ''}`}>Insert a valid value</p>
+
       </div>
 
       <div
