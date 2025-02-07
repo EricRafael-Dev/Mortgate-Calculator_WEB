@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CalculatorInputs from "./components/CalculatorInputs";
 import Results from "./components/Results";
 
@@ -7,10 +7,12 @@ function App() {
   const [valueTerm, setValueTerm] = useState("");
   const [valueRate, setValueRate] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+  const showResults = useRef();
+  const [showState, setShowState] = useState(showResults.current);
 
   return (
     <div className="lg:h-screen lg:w-screen lg:flex lg:justify-center lg:items-center">
-      
       <main
         className="
     bg-white h-full flex flex-col justify-center 
@@ -24,11 +26,12 @@ function App() {
             <label className=" ">
               <button
                 onClick={() => {
-                  ;
                   setSubmitted(false);
+                  setSelectedOption("");
                   setValue("");
                   setValueTerm("");
                   setValueRate("");
+                  setShowState(false);
                 }}
                 className="text-[gray] underline cursor-pointer"
               >
@@ -45,11 +48,31 @@ function App() {
             setValueTerm={setValueTerm}
             setValueRate={setValueRate}
             setSubmitted={setSubmitted}
+            setSelectedOption={setSelectedOption}
+            showResults={showResults}
+            setShowState={setShowState}
           />
         </div>
 
         <div className="lg:w-[40%]">
-          <Results />
+          <div
+            className="bg-[#133040] flex flex-col justify-center items-center pt-8 pb-8 
+      md:static 
+      lg:h-full lg:rounded-bl-[70px] lg:rounded-tl-none lg:rounded-3xl 
+      "
+          >
+            <Results
+              value={value}
+              valueTerm={valueTerm}
+              valueRate={valueRate}
+              submitted={submitted}
+              selectedOption={selectedOption}
+              setSubmitted={setSubmitted}
+              showResults={showResults}
+              showState={showState}
+              setShowState={setShowState}
+            />
+          </div>
         </div>
       </main>
     </div>
